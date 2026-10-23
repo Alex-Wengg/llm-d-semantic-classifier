@@ -43,9 +43,10 @@ spec:
           # standard gRPC health protocol (grpc.health.v1) is served on the
           # same port as classify; the listener only binds — and Check starts
           # answering SERVING — after load and warmup succeed, so a failed
-          # ModelCar never becomes an endpoint.
+          # ModelCar never becomes an endpoint. A gRPC probe takes a port
+          # number, not a port name, and names the classify service.
           readinessProbe:
-            grpc: {port: grpc}
+            grpc: {port: 50051, service: classify.Classify}
             initialDelaySeconds: 3
             periodSeconds: 2
           resources:
